@@ -1,0 +1,87 @@
+class SortLists implements Comparator<ArrayList<Integer>>
+{
+    public int compare(ArrayList<Integer> o1,ArrayList<Integer> o2)
+    {
+        for (int i = 0; i < Math.min(o1.size(), o2.size()); i++) 
+        {
+            int c = o1.get(i).compareTo(o2.get(i));
+            if (c != 0) {
+                return c;
+            }
+        }
+        return o1.size()-o2.size();
+    }
+}
+class Solution
+{
+    public static boolean isSafe(int row,int col,int[][] board,int n)
+    {
+        int duprow = row;
+        int dupcol = col;
+        while(duprow>=0 && dupcol>=0)
+        {
+            if(board[duprow][dupcol] == 1)
+                    return false;
+            duprow -= 1;
+            dupcol -= 1;
+        }
+        duprow = row;
+        dupcol = col;
+            
+        while(dupcol >= 0)
+        {
+            if(board[duprow][dupcol] == 1)
+                return false;
+            dupcol -=1;
+        }
+        duprow = row;
+        dupcol = col;
+        while(duprow<n && dupcol>=0)
+        {
+            if(board[duprow][dupcol] == 1)
+                    return false;
+                duprow+=1;
+                dupcol-=1;
+        }
+        return true;
+
+    }
+    public static void solve(int col,int n,int[][] board,ArrayList<ArrayList<Integer>> ans)
+    {
+        if(col == n)
+        {
+            ArrayList<Integer> cur = new ArrayList<Integer>();
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    if(board[i][j] == 1)
+                    {
+                        cur.add(j+1);
+                    }
+                }
+            }
+            ans.add(cur);
+            return;
+        }
+        for(int row=0;row<n;row++)
+        {
+            if(isSafe(row,col,board,n))
+            {
+                board[row][col] = 1;
+                solve(col+1,n,board,ans);
+                board[row][col] = 0;
+            }
+        }
+    }
+    
+    static ArrayList<ArrayList<Integer>> nQueen(int n) 
+    {
+        // code here
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        int board[][] = new int[n][n];
+        solve(0,n,board,ans);
+        Collections.sort(ans,new SortLists());
+        return ans;
+    }
+}
