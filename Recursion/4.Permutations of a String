@@ -1,0 +1,39 @@
+public String swap(String a, int i, int j) 
+    { 
+        char temp; 
+        char[] charArray = a.toCharArray(); 
+        temp = charArray[i] ; 
+        charArray[i] = charArray[j]; 
+        charArray[j] = temp; 
+        return String.valueOf(charArray); 
+    } 
+  
+    public void permute(String str, int l, int r,HashSet<String> ans ) 
+    { 
+        if (l == r) 
+            {
+                ans.add(str);
+                return;
+            }
+        else
+        { 
+            for (int i = l; i <= r; i++) 
+            { 
+                str = swap(str,l,i); 
+                permute(str, l+1, r,ans); 
+                str = swap(str,l,i); 
+            } 
+        } 
+    } 
+  
+    public List<String> find_permutation(String s) 
+    {
+        // Code here
+        int n = s.length();
+        HashSet<String> ans = new HashSet<>();
+        
+        permute(s,0,n-1,ans);
+        List<String> op = new ArrayList<String>(ans);
+        Collections.sort(op);
+        return op;
+    }
