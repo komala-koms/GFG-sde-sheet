@@ -1,0 +1,41 @@
+def genIp(self, s):
+        #Code here3
+        def isValidIp(s,n,i,j,k):
+            a = s[:i+1]
+            b =s[i+1:j+1]
+            c = s[j+1:k+1]
+            d = s[k+1:n]
+            if(len(a)<0 or len(a)>3):
+                return False
+            if(a[0] == '0' and len(a) != 1):
+                return False
+            if(int(a)<0 or int(a)>255):
+                return False
+            if(len(b)<0 or len(b)>3):
+                return False
+            if(b[0] == '0' and len(b) != 1):
+                return False
+            if(int(b)<0 or int(b)>255):
+                return False
+            if(len(c)<0 or len(c)>3):
+                return False
+            if(c[0] == '0' and len(c) != 1):
+                return False
+            if(int(c)<0 or int(c)>255):
+                return False
+            if(len(d)<0 or len(d)>3):
+                return False
+            if(d[0] == '0' and len(d) != 1):
+                return False
+            if(int(d)<0 or int(d)>255):
+                return False
+            return True
+        
+        res = list()
+        n = len(s)
+        for i in range(n-3):
+            for j in range(i+1,n-2):
+                for k in range(j+1,n-1):
+                    if(isValidIp(s,n,i,j,k)):
+                        res.append(s[:i+1]+"."+s[i+1:j+1]+"."+s[j+1:k+1]+"."+s[k+1:n])
+        return res
