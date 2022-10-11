@@ -1,0 +1,63 @@
+public static boolean isSafe(int i, int j, int n, int[][] grid,int[][] visited)
+    {
+        if(i>=0 && i<n && j>=0 && j<n && grid[i][j]!=0 && visited[i][j]==0)
+            return true;
+        return false;
+    }
+    public static void ways(int r,int c,String s, int[][] m, int n, ArrayList<String> ans,
+    int[][] visited)
+    {
+        if(r== n-1 && c==n-1)
+        {
+            ans.add(s);
+            return;
+        }
+        if(isSafe(r-1,c,n,m,visited))
+        {
+            s = s+"U";
+            visited[r][c]=1;
+            ways(r-1,c,s,m,n,ans,visited);
+            s = s.substring(0,s.length()-1);
+            visited[r][c] = 0;
+        }
+        if(isSafe(r+1,c,n,m,visited))
+        {
+            s = s+"D";
+            visited[r][c]=1;
+            ways(r+1,c,s,m,n,ans,visited);
+            s = s.substring(0,s.length()-1);
+            visited[r][c]=0;
+        }
+        if(isSafe(r,c-1,n,m,visited))
+        {
+            s = s+"L";
+            visited[r][c]=1;
+            ways(r,c-1,s,m,n,ans,visited);
+            s = s.substring(0,s.length()-1);
+            visited[r][c]=0;
+        }
+        if(isSafe(r,c+1,n,m,visited))
+        {
+            s = s+"R";
+            visited[r][c]=1;
+            ways(r,c+1,s,m,n,ans,visited);
+            s = s.substring(0,s.length()-1);
+            visited[r][c]=0;
+        }
+        
+            
+    }
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        // Your code here
+        ArrayList<String> ans = new ArrayList<String>();
+        if(m[0][0] == 0 || m[n-1][n-1] == 0)
+            {
+                ans.add("-1");
+                return ans;
+            }
+        
+        String s = "";
+        int[][] visited = new int[n][n];
+        ways(0,0,s,m,n,ans,visited);
+        return ans;
+    }
