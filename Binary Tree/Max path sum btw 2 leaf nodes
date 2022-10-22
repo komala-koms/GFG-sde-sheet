@@ -1,0 +1,30 @@
+int maxPath(Node root,int[] res)
+    {
+        if(root == null)
+            return 0;
+        if(root.left == null && root.right == null)
+            return root.data;
+        int ls = maxPath(root.left,res);
+        int rs = maxPath(root.right,res);
+        if(root.left!=null && root.right!=null)
+        {
+            res[0] = Math.max(res[0],ls+rs+root.data);
+            return Math.max(ls,rs)+root.data;
+        }
+        if(root.left==null)
+            return rs+root.data;
+        else
+            return ls+root.data;
+        
+    }
+    int maxPathSum(Node root)
+    { 
+        // code here 
+        int res[] = new int[]{Integer.MIN_VALUE};
+        
+        int ans = maxPath(root,res);
+        if(root.left!=null && root.right!=null)
+            return res[0];
+       
+        return Math.max(res[0],ans);
+    } 
